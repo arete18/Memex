@@ -16,11 +16,12 @@ const initExpressionMatch = url => (expression = '') => {
  * rule matches it.
  *
  * @param {string} url The URL to check against the blacklist.
- * @param {Array<any>} blacklist Blacklist data to check URL against.
  * @return {boolean} Denotes whether or not the given URL matches any blacklist expressions.
  */
-export function isURLBlacklisted(url = '', blacklist = []) {
+export async function isURLBlacklisted(url = '') {
     const doesExpressionMatchURL = initExpressionMatch(url)
+    const blacklist = await fetchBlacklist()
+
     // Reduces blacklist to a bool by running main checking logic against each blacklist expression
     // (returns true if a single match is found in entire blacklist)
     return blacklist.reduce(
